@@ -2,4 +2,7 @@
     <string name="app_name">BeerHive</string>
     <string name="action_settings">Settings</string>
     <string name="brewing_tips">Brewing tips</string>
+    <string name="places_loading">Loading</string>
+    <string name="please_wait_message">Please wait</string>
+    <string name="cancel_text">Cancel</string>
 </resources>
