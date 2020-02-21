@@ -1,6 +1,6 @@
 package com.example.beerhive.network.model;
 
-class Volume {
+public class Volume {
     private Integer value;
     private String unit;
 
