@@ -50,66 +50,17 @@ public class MainActivity extends AppCompatActivity implements BeerListAdapter.B
         progressDialog = new ProgressDialog(this);
 
         onBeerListScreenCreated();
-        beerListRecyclerView =  binding.beerListRecyclerView;
+        beerListRecyclerView = binding.beerListRecyclerView;
 
         beerListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         beerListRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
     }
 
-    private void onBeerListScreenCreated(){
-//        BeerViewModel beerViewModel = new  ViewModelProvider(this).get(BeerViewModel.class);
-//
-//        beerViewModel.getBeerListLiveData().observe(this,beerResponsesList -> {
-//            beerListAdapter = new BeerListAdapter(this,beerResponsesList);
-//            beerListRecyclerView.setAdapter(beerListAdapter);
-//        });
-
-//        BeerRepository beerRepository = new BeerRepositoryImplentation();
-//
-//        beerRepository.loadBeerListFromNetwork(new BeerRepository.BeerLoaderCallback() {
-//            @Override
-//            public void onBeerListLoaded(List<BeerResponse> beerResponseList) {
-//
-//                populateList(beerResponseList);
-//            }
-//
-//            @Override
-//            public void onErrorOccurred() {
-//
-//            }
-//        });
-
-        newsPresenter =  new BeerPresenter(this);
+    private void onBeerListScreenCreated() {
+        newsPresenter = new BeerPresenter(this);
         newsPresenter.loadBeerList();
 
-    }
-
-    private void populateList(List<BeerResponse> beerResponseList) {
-        beerListAdapter = new BeerListAdapter(this,beerResponseList);
-        beerListRecyclerView.setAdapter(beerListAdapter);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -123,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements BeerListAdapter.B
         startActivity(intent);
     }
 
-    private Beer getBeer(BeerResponse beerResponse){
+    private Beer getBeer(BeerResponse beerResponse) {
         Beer beer = new Beer();
         beer.setBeerDescription(beerResponse.getDescription());
         beer.setBeerBrewerTips(beerResponse.getBrewersTips());
@@ -135,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements BeerListAdapter.B
 
     @Override
     public void displayBeerList(List<BeerResponse> responseList) {
-        beerListAdapter = new BeerListAdapter(this,responseList);
+        beerListAdapter = new BeerListAdapter(this, responseList);
         beerListRecyclerView.setAdapter(beerListAdapter);
     }
 
