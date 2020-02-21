@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements BeerListAdapter.B
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-
+        setSupportActionBar(binding.mainToolbar);
+        getSupportActionBar().setTitle(getString(R.string.beer_list_title));
         progressDialog = new ProgressDialog(this);
 
         onBeerListScreenCreated();
