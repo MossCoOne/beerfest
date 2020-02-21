@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/beerImageView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <TextView
+            android:id="@+id/beerNameTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="28sp"
+            android:layout_margin="@dimen/horizontal_margin"
+            android:textColor="@color/colorBlack"
+            android:layout_marginBottom="@dimen/horizontal_margin"
+            tools:text="This is the name" />
+
+        <TextView
+            android:id="@+id/beerDescriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/horizontal_margin"
+            android:layout_marginBottom="@dimen/horizontal_margin"
+            tools:text="This is the name" />
+
+        <TextView
+            android:id="@+id/brewerTipsTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/horizontal_margin"
+            android:layout_marginBottom="@dimen/horizontal_margin"
+            tools:text="This is brewer tips" />
+    </LinearLayout>
+
+</layout>

@@ -1,7 +1,11 @@
-package com.example.beerhive;
+package com.example.beerhive.beerlist;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.beerhive.R;
+import com.example.beerhive.beerdetail.Beer;
+import com.example.beerhive.beerdetail.BeerDetailActivity;
 import com.example.beerhive.beerlist.BeerListAdapter;
 import com.example.beerhive.beerlist.BeerRepository;
 import com.example.beerhive.beerlist.BeerRepositoryImplentation;
@@ -97,7 +101,23 @@ public class MainActivity extends AppCompatActivity implements BeerListAdapter.B
     }
 
     @Override
-    public void onBeerItemClicked(BeerResponse catEntry) {
+    public void onBeerItemClicked(BeerResponse beerResponse) {
+        navigateToDetailedScreen(beerResponse);
+    }
 
+    private void navigateToDetailedScreen(BeerResponse beerResponse) {
+        Intent intent = new Intent(this, BeerDetailActivity.class);
+        intent.putExtra("beer_extra", getBeer(beerResponse));
+        startActivity(intent);
+    }
+
+    private Beer getBeer(BeerResponse beerResponse){
+        Beer beer = new Beer();
+        beer.setBeerDescription(beerResponse.getDescription());
+        beer.setBeerBrewerTips(beerResponse.getBrewersTips());
+        beer.setBeerImageUrl(beerResponse.getImageUrl());
+        beer.setBeerName(beerResponse.getName());
+
+        return beer;
     }
 }
