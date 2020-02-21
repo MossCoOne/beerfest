@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/horizontal_margin"
             android:layout_marginTop="@dimen/horizontal_margin"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextImageView"
             app:layout_constraintStart_toEndOf="@+id/beerImageView"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Castel Lite" />
@@ -38,11 +38,20 @@
             android:layout_marginStart="@dimen/horizontal_margin"
             android:layout_marginBottom="@dimen/horizontal_margin"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/nextImageView"
             app:layout_constraintStart_toEndOf="@+id/beerImageView"
             tools:text="1,5 kg" />
 
-
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/nextImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/horizontal_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_chevron_right_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
