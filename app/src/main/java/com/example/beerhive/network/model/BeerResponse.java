@@ -14,19 +14,19 @@ public class BeerResponse {
     @SerializedName("image_url")
     private String imageUrl;
     private Double abv;
-    private Integer ibu;
+    private Double ibu;
     @SerializedName("target_fg")
     private Integer targetFg;
     @SerializedName("target_og")
-    private Integer targetOg;
+    private Double targetOg;
     @SerializedName("ebc")
     private Integer ebc;
     @SerializedName("srm")
-    private Integer srm;
+    private Double srm;
     @SerializedName("ph")
     private Double ph;
     @SerializedName("attenuation_level")
-    private Integer attenuationLevel;
+    private Double attenuationLevel;
     @SerializedName("volume")
     private Volume volume;
     @SerializedName("boil_volume")
@@ -41,4 +41,88 @@ public class BeerResponse {
     private String brewersTips;
     @SerializedName("contributed_by")
     private String contributedBy;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTagline() {
+        return tagline;
+    }
+
+    public String getFirstBrewed() {
+        return firstBrewed;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Double getAbv() {
+        return abv;
+    }
+
+    public Double getIbu() {
+        return ibu;
+    }
+
+    public Integer getTargetFg() {
+        return targetFg;
+    }
+
+    public Double getTargetOg() {
+        return targetOg;
+    }
+
+    public Integer getEbc() {
+        return ebc;
+    }
+
+    public Double getSrm() {
+        return srm;
+    }
+
+    public Double getPh() {
+        return ph;
+    }
+
+    public Double getAttenuationLevel() {
+        return attenuationLevel;
+    }
+
+    public Volume getVolume() {
+        return volume;
+    }
+
+    public BoilVolume getBoilVolume() {
+        return boilVolume;
+    }
+
+    public Method getMethod() {
+        return method;
+    }
+
+    public Ingredients getIngredients() {
+        return ingredients;
+    }
+
+    public List<String> getFoodPairing() {
+        return foodPairing;
+    }
+
+    public String getBrewersTips() {
+        return brewersTips;
+    }
+
+    public String getContributedBy() {
+        return contributedBy;
+    }
 }

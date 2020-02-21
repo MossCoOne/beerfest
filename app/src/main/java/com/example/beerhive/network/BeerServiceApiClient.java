@@ -7,7 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BeerServiceApiClient {
-    private static final String baseUrl = "https://api.punkapi.com/v2/beers";
+    private static final String baseUrl = "https://api.punkapi.com/v2/";
 
 
     public static BeerServiceApi beerServiceApi;
@@ -19,8 +19,7 @@ public class BeerServiceApiClient {
     public static BeerServiceApi getInstance() {
         Retrofit retrofit;
         if (beerServiceApi == null) {
-            Gson gson = new GsonBuilder()
-                    .create();
+            Gson gson = new GsonBuilder().create();
             retrofit = new Retrofit.Builder()
                     .baseUrl(baseUrl)
                     .addConverterFactory(GsonConverterFactory.create(gson))
