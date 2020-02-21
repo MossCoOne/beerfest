@@ -2,15 +2,24 @@ package com.example.beerhive;
 
 import android.os.Bundle;
 
+import com.example.beerhive.beerlist.BeerRepository;
+import com.example.beerhive.beerlist.BeerRepositoryImplentation;
+import com.example.beerhive.beerlist.BeerViewModel;
+import com.example.beerhive.network.model.BeerResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,6 +38,30 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        BeerRepository beerRepository =  new BeerRepositoryImplentation();
+        beerRepository.loadBeerListFromNetwork(new BeerRepository.BeerLoaderCallback() {
+            @Override
+            public void onBeerListLoaded(List<BeerResponse> newsArticle) {
+                Log.d("Yay Success",newsArticle.toString());
+            }
+
+            @Override
+            public void onErrorOccurred() {
+                Log.d("Nay Failure","So sadddd");
+            }
+        });
+
+        onBeerListScreenCreated();
+    }
+
+    private void onBeerListScreenCreated(){
+        BeerViewModel beerViewModel = new  ViewModelProvider(this).get(BeerViewModel.class);
+
+        beerViewModel.getBeerListLiveData().observe(this,beerResponsesList -> {
+
+        });
+
     }
 
     @Override
