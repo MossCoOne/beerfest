@@ -2,6 +2,8 @@ package com.example.beerhive.beerlist;
 
 import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.beerhive.network.BeerServiceApi;
 import com.example.beerhive.network.BeerServiceApiClient;
 import com.example.beerhive.network.model.BeerResponse;
@@ -15,6 +17,7 @@ import retrofit2.Response;
 public class BeerRepositoryImplentation implements BeerRepository {
 
    private BeerServiceApi beerServiceApi;
+   private MutableLiveData<List<BeerResponse>> listMutableLiveData;
 
     public BeerRepositoryImplentation() {
         this.beerServiceApi = BeerServiceApiClient.getInstance();

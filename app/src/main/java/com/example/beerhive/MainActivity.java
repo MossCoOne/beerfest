@@ -2,17 +2,23 @@ package com.example.beerhive;
 
 import android.os.Bundle;
 
+import com.example.beerhive.beerlist.BeerListAdapter;
 import com.example.beerhive.beerlist.BeerRepository;
 import com.example.beerhive.beerlist.BeerRepositoryImplentation;
 import com.example.beerhive.beerlist.BeerViewModel;
+import com.example.beerhive.databinding.ActivityMainBinding;
 import com.example.beerhive.network.model.BeerResponse;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.View;
@@ -21,47 +27,51 @@ import android.view.MenuItem;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BeerListAdapter.BeerItemClickListener {
+
+    private RecyclerView beerListRecyclerView;
+    private BeerListAdapter beerListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        onBeerListScreenCreated();
+        beerListRecyclerView =  binding.beerListRecyclerView;
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        beerListRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        beerListRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        BeerRepository beerRepository =  new BeerRepositoryImplentation();
+    }
+
+    private void onBeerListScreenCreated(){
+//        BeerViewModel beerViewModel = new  ViewModelProvider(this).get(BeerViewModel.class);
+//
+//        beerViewModel.getBeerListLiveData().observe(this,beerResponsesList -> {
+//            beerListAdapter = new BeerListAdapter(this,beerResponsesList);
+//            beerListRecyclerView.setAdapter(beerListAdapter);
+//        });
+
+        BeerRepository beerRepository = new BeerRepositoryImplentation();
+
         beerRepository.loadBeerListFromNetwork(new BeerRepository.BeerLoaderCallback() {
             @Override
-            public void onBeerListLoaded(List<BeerResponse> newsArticle) {
-                Log.d("Yay Success",newsArticle.toString());
+            public void onBeerListLoaded(List<BeerResponse> beerResponseList) {
+
+                populateList(beerResponseList);
             }
 
             @Override
             public void onErrorOccurred() {
-                Log.d("Nay Failure","So sadddd");
+
             }
         });
 
-        onBeerListScreenCreated();
     }
 
-    private void onBeerListScreenCreated(){
-        BeerViewModel beerViewModel = new  ViewModelProvider(this).get(BeerViewModel.class);
-
-        beerViewModel.getBeerListLiveData().observe(this,beerResponsesList -> {
-
-        });
-
+    private void populateList(List<BeerResponse> beerResponseList) {
+        beerListAdapter = new BeerListAdapter(this,beerResponseList);
+        beerListRecyclerView.setAdapter(beerListAdapter);
     }
 
     @Override
@@ -84,5 +94,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBeerItemClicked(BeerResponse catEntry) {
+
     }
 }
