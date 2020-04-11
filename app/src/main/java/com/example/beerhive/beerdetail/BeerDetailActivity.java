@@ -23,11 +23,11 @@ public class BeerDetailActivity extends AppCompatActivity {
         if (getIntent() != null && getIntent().hasExtra(beer_extra)){
             Beer beer =  getIntent().getParcelableExtra(beer_extra);
 
-            binding.beerDescriptionTextView.setText(beer.getBeerDescription());
-            binding.beerNameTextView.setText(beer.getBeerName());
-            binding.brewerTipsTextView.setText(beer.getBeerBrewerTips());
+            binding.beerDescriptionTextView.setText(beer.beerDescription);
+            binding.beerNameTextView.setText(beer.beerName);
+            binding.brewerTipsTextView.setText(beer.beerBrewerTips);
 
-            Glide.with(binding.beerImageView.getContext()).load(beer.getBeerImageUrl()).dontAnimate().fitCenter().diskCacheStrategy(
+            Glide.with(binding.beerImageView.getContext()).load(beer.beerImageUrl).dontAnimate().fitCenter().diskCacheStrategy(
                     DiskCacheStrategy.RESOURCE)
                     .placeholder(R.drawable.place_holder).error(R.drawable.place_holder).into(binding.beerImageView);
         }
