@@ -4,32 +4,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.example.beerhive.R;
-import com.example.beerhive.beerdetail.Beer;
-import com.example.beerhive.beerdetail.BeerDetailActivity;
-import com.example.beerhive.beerlist.BeerListAdapter;
-import com.example.beerhive.beerlist.BeerRepository;
-import com.example.beerhive.beerlist.BeerRepositoryImplentation;
-import com.example.beerhive.beerlist.BeerViewModel;
-import com.example.beerhive.databinding.ActivityMainBinding;
-import com.example.beerhive.network.model.BeerResponse;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import com.example.beerhive.R;
+import com.example.beerhive.beerdetail.Beer;
+import com.example.beerhive.beerdetail.BeerDetailActivity;
+import com.example.beerhive.databinding.ActivityMainBinding;
+import com.example.beerhive.network.model.BeerResponse;
 
 import java.util.List;
 
@@ -70,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements BeerListAdapter.B
 
     private void navigateToDetailedScreen(BeerResponse beerResponse) {
         Intent intent = new Intent(this, BeerDetailActivity.class);
-        intent.putExtra("beer_extra", getBeer(beerResponse));
+        intent.putExtra(BeerDetailActivity.BEER_EXTRA, getBeer(beerResponse));
         startActivity(intent);
     }
 
