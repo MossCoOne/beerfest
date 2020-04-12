@@ -6,7 +6,8 @@ import android.os.Parcelable
 data class Beer(var beerName: String? = null,
                 var beerDescription: String? = null,
                 var beerBrewerTips: String? = null,
-                var beerImageUrl: String? = null):Parcelable {
+                var beerImageUrl: String? = null,
+                var beerBrewingTipsTitle: String? = null) : Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readString(),
             parcel.readString(),

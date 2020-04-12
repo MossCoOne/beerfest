@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
 
     override fun showErrorMessage() {
         progressDialog!!.dismiss()
-        showCustomDialog("Something went wrong")
+        showCustomDialog(getString(R.string.something_went_wrong_error_message))
     }
 
     override fun dismissProgressDialog() {
