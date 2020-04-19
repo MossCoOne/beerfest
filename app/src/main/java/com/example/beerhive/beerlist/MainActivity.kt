@@ -7,6 +7,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +21,7 @@ import com.example.beerhive.databinding.ActivityMainBinding
 import com.example.beerhive.network.model.BeerResponse
 
 class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
+    private lateinit var beerViewModel: BeerViewModel
     private var beerListRecyclerView: RecyclerView? = null
     private var beerListAdapter: BeerListAdapter? = null
     private var progressDialog: ProgressDialog? = null
@@ -26,6 +29,9 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+       // beerViewModel = ViewModelProvider(this).get(BeerViewModel::class.java)
+
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.title = getString(R.string.beer_list_title)
         progressDialog = ProgressDialog(this)

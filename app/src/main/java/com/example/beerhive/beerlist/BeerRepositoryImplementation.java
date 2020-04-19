@@ -14,12 +14,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BeerRepositoryImplentation implements BeerRepository {
+public class BeerRepositoryImplementation implements BeerRepository {
 
    private BeerServiceApi beerServiceApi;
-   private MutableLiveData<List<BeerResponse>> listMutableLiveData;
 
-    public BeerRepositoryImplentation() {
+    public BeerRepositoryImplementation() {
         this.beerServiceApi = BeerServiceApiClient.getInstance();
     }
 

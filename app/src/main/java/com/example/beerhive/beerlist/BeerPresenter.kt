@@ -23,6 +23,6 @@ class BeerPresenter(private val view: BeerView) : UserActionsListener {
     }
 
     init {
-        beerRepository = BeerRepositoryImplentation()
+        beerRepository = BeerRepositoryImplementation()
     }
 }
