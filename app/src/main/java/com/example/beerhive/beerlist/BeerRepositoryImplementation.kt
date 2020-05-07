@@ -11,10 +11,10 @@ import retrofit2.Response
 
 class BeerRepositoryImplementation : BeerRepository {
 
-    private val beerServiceApi: BeerServiceApi = BeerServiceApiClient.getInstance()
+    private val beerServiceApi: BeerServiceApi? = BeerServiceApiClient.beerServiceApi
 
     override fun loadBeerListFromNetwork(beerLoaderCallback: BeerLoaderCallback?) {
-        beerServiceApi.listOfBeers.enqueue(object : Callback<List<BeerResponse?>?> {
+        beerServiceApi?.listOfBeers()?.enqueue(object : Callback<List<BeerResponse?>?> {
             override fun onResponse(call: Call<List<BeerResponse?>?>, response: Response<List<BeerResponse?>?>) {
                 if (response.isSuccessful && response.body() != null) {
                     beerLoaderCallback?.onBeerListLoaded(response.body())
