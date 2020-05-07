@@ -78,12 +78,12 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
     }
 
     override fun showErrorMessage() {
-        progressDialog!!.dismiss()
+        progressDialog?.dismiss()
         showCustomDialog(getString(R.string.something_went_wrong_error_message))
     }
 
     override fun dismissProgressDialog() {
-        progressDialog!!.dismiss()
+        progressDialog?.dismiss()
     }
 
     private fun showCustomDialog(titleText: String?) {
