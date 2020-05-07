@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
         return beer
     }
 
-    override fun displayBeerList(responseList: MutableList<BeerResponse?>?) {
+    override fun displayBeerList(responseList:List<BeerResponse?>?) {
         beerListAdapter = BeerListAdapter(this, responseList)
         beerListRecyclerView?.adapter = beerListAdapter
     }

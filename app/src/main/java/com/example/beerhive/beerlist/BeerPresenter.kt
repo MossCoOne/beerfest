@@ -10,7 +10,7 @@ class BeerPresenter(private val view: BeerView) : UserActionsListener {
     override fun loadBeerList() {
         view.showProgressDialog()
         beerRepository.loadBeerListFromNetwork(object : BeerLoaderCallback {
-            override fun onBeerListLoaded(beerResponseList: MutableList<BeerResponse?>?) {
+            override fun onBeerListLoaded(beerResponseList: List<BeerResponse?>?) {
                 view.displayBeerList(beerResponseList)
                 view.dismissProgressDialog()
             }
