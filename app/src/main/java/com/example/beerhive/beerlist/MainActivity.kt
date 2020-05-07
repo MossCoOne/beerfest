@@ -44,22 +44,22 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
         newsPresenter?.loadBeerList()
     }
 
-    override fun onBeerItemClicked(beerResponse: BeerResponse) {
+    override fun onBeerItemClicked(beerResponse: BeerResponse?) {
         navigateToDetailedScreen(beerResponse)
     }
 
-    private fun navigateToDetailedScreen(beerResponse: BeerResponse) {
+    private fun navigateToDetailedScreen(beerResponse: BeerResponse?) {
         val intent = Intent(this, BeerDetailActivity::class.java)
         intent.putExtra(BeerDetailActivity.BEER_EXTRA, getBeer(beerResponse))
         startActivity(intent)
     }
 
-    private fun getBeer(beerResponse: BeerResponse): Beer {
+    private fun getBeer(beerResponse: BeerResponse?): Beer {
         val beer = Beer()
-        beer.beerDescription = beerResponse.description
-        beer.beerBrewerTips = beerResponse.brewersTips
-        beer.beerImageUrl = beerResponse.imageUrl
-        beer.beerName = beerResponse.name
+        beer.beerDescription = beerResponse?.description
+        beer.beerBrewerTips = beerResponse?.brewersTips
+        beer.beerImageUrl = beerResponse?.imageUrl
+        beer.beerName = beerResponse?.name
         return beer
     }
 
