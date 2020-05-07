@@ -25,7 +25,7 @@ class BeerRepositoryImplementation : BeerRepository {
 
             override fun onFailure(call: Call<List<BeerResponse?>?>, t: Throwable) {
                 Log.d("Call Failure", t.message)
-                beerLoaderCallback!!.onErrorOccurred()
+                beerLoaderCallback?.onErrorOccurred()
             }
         })
     }
