@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class BeerViewModel(private val beerDatabase: BeerDatabase, application: Application) : AndroidViewModel(application) {
 
-    private val beerRepository = BeerRepo(beerDatabase)
+    private val beerRepository = BeerRepository(beerDatabase)
     private var viewModelJob = Job()
     private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 

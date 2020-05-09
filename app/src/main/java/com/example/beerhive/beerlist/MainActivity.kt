@@ -15,19 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beerhive.R
 import com.example.beerhive.beerdetail.BeerDetailActivity
-import com.example.beerhive.beerlist.BeerContract.BeerView
 import com.example.beerhive.beerlist.BeerListAdapter.BeerItemClickListener
 import com.example.beerhive.database.BeerDatabase
 import com.example.beerhive.databinding.ActivityMainBinding
 import com.example.beerhive.domain.Beer
-import com.example.beerhive.network.model.BeerResponse
 
-class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
+class MainActivity : AppCompatActivity(), BeerItemClickListener {
     private lateinit var beerViewModel: BeerViewModel
     private var beerListRecyclerView: RecyclerView? = null
     private var beerListAdapter: BeerListAdapter? = null
     private var progressDialog: ProgressDialog? = null
-    private var newsPresenter: BeerPresenter? = null
     private lateinit var databaseDao: BeerDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,10 +63,7 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
         startActivity(intent)
     }
 
-    override fun displayBeerList(responseList: List<BeerResponse?>?) {
-    }
-
-    override fun showProgressDialog() {
+    private fun showProgressDialog() {
         if (progressDialog != null) {
             progressDialog?.setTitle(getString(R.string.places_loading))
             progressDialog?.show()
@@ -78,12 +72,12 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
         }
     }
 
-    override fun showErrorMessage() {
+    private fun showErrorMessage() {
         progressDialog?.dismiss()
         showCustomDialog(getString(R.string.something_went_wrong_error_message))
     }
 
-    override fun dismissProgressDialog() {
+    private fun dismissProgressDialog() {
         progressDialog?.dismiss()
     }
 
