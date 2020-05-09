@@ -1,17 +1,19 @@
 package com.example.beerhive.network.model
 
+import com.example.beerhive.database.DataBaseBeer
+import com.example.beerhive.domain.Beer
 import com.google.gson.annotations.SerializedName
 
 data class BeerResponse(val id: Int? = null,
-                        val name: String? = null,
-                        val tagline: String? = null,
+                        val name: String,
+                        val tagline: String,
 
                         @SerializedName("first_brewed")
                         val firstBrewed: String? = null,
-                        val description: String? = null,
+                        val description: String,
 
                         @SerializedName("image_url")
-                        val imageUrl: String? = null,
+                        val imageUrl: String,
                         val abv: Double? = null,
                         val ibu: Double? = null,
 
@@ -34,7 +36,7 @@ data class BeerResponse(val id: Int? = null,
                         val attenuationLevel: Double? = null,
 
                         @SerializedName("volume")
-                        val volume: Volume? = null,
+                        val volume: Volume,
 
                         @SerializedName("boil_volume")
                         val boilVolume: BoilVolume? = null,
@@ -49,10 +51,39 @@ data class BeerResponse(val id: Int? = null,
                         val foodPairing: List<String>? = null,
 
                         @SerializedName("brewers_tips")
-                        val brewersTips: String? = null,
+                        val brewersTips: String,
 
                         @SerializedName("contributed_by")
-                        val contributedBy: String? = null)
+                        val contributedBy: String? = null) {
+
+    private lateinit var beerResponseList: List<BeerResponse>
+
+    fun asDomainModel(): List<Beer> {
+        return beerResponseList.map {
+            Beer(
+                    beerName = it.name,
+                    beerDescription = it.description,
+                    beerBrewerTips = it.brewersTips,
+                    beerImageUrl = it.imageUrl,
+                    beerBrewingTipsTitle = it.tagline,
+                    volume = it.volume.value,
+                    volumeUnit = it.volume.unit
+            )
+        }
+    }
+}
+
+fun List<BeerResponse>.asDataBaseModel(): Array<DataBaseBeer> {
+    return map {
+        DataBaseBeer(beerName = it.name,
+                beerDescription = it.description,
+                beerBrewerTips = it.brewersTips,
+                beerImageUrl = it.imageUrl,
+                beerBrewingTipsTitle = it.tagline,
+                volume = it.volume.value,
+                volumeUnit = it.volume.unit)
+    }.toTypedArray()
+}
 
 data class BoilVolume(val value: Int? = null,
                       val unit: String? = null)
@@ -93,5 +124,5 @@ data class Ingredients(@SerializedName("malt")
                        val yeast: String? = null)
 
 
-data class Volume(val value: Int? = null,
-                  val unit: String? = null)
+data class Volume(val value: Int,
+                  val unit: String)
