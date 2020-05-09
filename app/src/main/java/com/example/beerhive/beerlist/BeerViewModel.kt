@@ -1,42 +1,30 @@
 package com.example.beerhive.beerlist
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.beerhive.beerdetail.Beer
-import com.example.beerhive.network.model.BeerResponse
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import com.example.beerhive.database.BeerDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
-class BeerViewModel : ViewModel(){
-    private val beerListLiveData  : MutableLiveData<List<BeerResponse>> = TODO()
-//    private BeerRepository beerRepository;
-    //
-    //    private MutableLiveData<List<BeerResponse>> beerListLiveData;
-    //
-    //    public BeerViewModel(@NonNull Application application) {
-    //        super(application);
-    //        beerRepository =  new BeerRepositoryImplentation();
-    //        retrieveBeerList();
-    //    }
-    //
-    //    public MutableLiveData<List<BeerResponse>> getBeerListLiveData() {
-    //        return beerListLiveData;
-    //    }
-    //
-    //    private void retrieveBeerList(){
-    //        beerRepository.loadBeerListFromNetwork(new BeerRepository.BeerLoaderCallback() {
-    //            @Override
-    //            public void onBeerListLoaded(List<BeerResponse> newsArticle) {
-    //                beerListLiveData.setValue(newsArticle);
-    //            }
-    //
-    //            @Override
-    //            public void onErrorOccurred() {
-    //                beerListLiveData.setValue(null);
-    //            }
-    //        });
-    //    }
+class BeerViewModel(private val beerDatabase: BeerDatabase, application: Application) : AndroidViewModel(application) {
 
-    fun getListOfBeers(): MutableLiveData<List<BeerResponse>> {
-        return beerListLiveData
+    private val beerRepository = BeerRepo(beerDatabase)
+    private var viewModelJob = Job()
+    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+
+    init {
+        viewModelScope.launch {
+            beerRepository.refreshBeerList()
+        }
+    }
+
+    val beerList = beerRepository.beerList
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
 
 }
