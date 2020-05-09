@@ -1,10 +1,10 @@
 package com.example.beerhive.network
 
 import com.example.beerhive.network.model.BeerResponse
-import retrofit2.Call
+import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 
 interface BeerServiceApi {
     @GET("beers")
-    fun listOfBeers(): Call<List<BeerResponse?>?>?
+    fun getListOfBeersAsync(): Deferred<List<BeerResponse>>
 }

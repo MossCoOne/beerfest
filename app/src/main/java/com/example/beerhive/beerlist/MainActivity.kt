@@ -4,71 +4,66 @@ import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beerhive.R
-import com.example.beerhive.beerdetail.Beer
 import com.example.beerhive.beerdetail.BeerDetailActivity
-import com.example.beerhive.beerlist.BeerContract.BeerView
 import com.example.beerhive.beerlist.BeerListAdapter.BeerItemClickListener
+import com.example.beerhive.database.BeerDatabase
 import com.example.beerhive.databinding.ActivityMainBinding
-import com.example.beerhive.network.model.BeerResponse
+import com.example.beerhive.domain.Beer
 
-class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
+class MainActivity : AppCompatActivity(), BeerItemClickListener {
     private lateinit var beerViewModel: BeerViewModel
     private var beerListRecyclerView: RecyclerView? = null
     private var beerListAdapter: BeerListAdapter? = null
     private var progressDialog: ProgressDialog? = null
-    private var newsPresenter: BeerPresenter? = null
+    private lateinit var databaseDao: BeerDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        showProgressDialog()
+        databaseDao = BeerDatabase.getInstance(application)
 
-       // beerViewModel = ViewModelProvider(this).get(BeerViewModel::class.java)
+        val application = requireNotNull(this).application
+        val viewModelFactory = BeerViewModelFactory(databaseDao, application)
+        beerViewModel = ViewModelProvider(this, viewModelFactory).get(BeerViewModel::class.java)
 
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.title = getString(R.string.beer_list_title)
         progressDialog = ProgressDialog(this)
-        onBeerListScreenCreated()
+       // onBeerListScreenCreated()
         beerListRecyclerView = binding.beerListRecyclerView
         beerListRecyclerView?.layoutManager = LinearLayoutManager(this)
         beerListRecyclerView?.itemAnimator = DefaultItemAnimator()
+        beerViewModel.beerList.observe(this, Observer { onListLoaded(it) })
     }
 
-    private fun onBeerListScreenCreated() {
-        newsPresenter = BeerPresenter(this)
-        newsPresenter?.loadBeerList()
-    }
-
-    override fun onBeerItemClicked(beerResponse: BeerResponse?) {
-        navigateToDetailedScreen(beerResponse)
-    }
-
-    private fun navigateToDetailedScreen(beerResponse: BeerResponse?) {
-        val intent = Intent(this, BeerDetailActivity::class.java)
-        intent.putExtra(BeerDetailActivity.BEER_EXTRA, getBeer(beerResponse))
-        startActivity(intent)
-    }
-
-    private fun getBeer(beerResponse: BeerResponse?): Beer {
-        val beer = Beer()
-        beer.beerDescription = beerResponse?.description
-        beer.beerBrewerTips = beerResponse?.brewersTips
-        beer.beerImageUrl = beerResponse?.imageUrl
-        beer.beerName = beerResponse?.name
-        return beer
-    }
-
-    override fun displayBeerList(responseList:List<BeerResponse?>?) {
-        beerListAdapter = BeerListAdapter(this, responseList)
+    private fun onListLoaded(it: List<Beer>) {
+        dismissProgressDialog()
+        Log.d("Resultsss",it.toString())
+        beerListAdapter = BeerListAdapter(this, it)
         beerListRecyclerView?.adapter = beerListAdapter
     }
 
-    override fun showProgressDialog() {
+    override fun onBeerItemClicked(domainBeer: Beer) {
+        navigateToDetailedScreen(domainBeer)
+    }
+
+    private fun navigateToDetailedScreen(domainBeer: Beer) {
+        val intent = Intent(this, BeerDetailActivity::class.java)
+        intent.putExtra(BeerDetailActivity.BEER_EXTRA, domainBeer)
+        startActivity(intent)
+    }
+
+    private fun showProgressDialog() {
         if (progressDialog != null) {
             progressDialog?.setTitle(getString(R.string.places_loading))
             progressDialog?.show()
@@ -77,12 +72,12 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener, BeerView {
         }
     }
 
-    override fun showErrorMessage() {
+    private fun showErrorMessage() {
         progressDialog?.dismiss()
         showCustomDialog(getString(R.string.something_went_wrong_error_message))
     }
 
-    override fun dismissProgressDialog() {
+    private fun dismissProgressDialog() {
         progressDialog?.dismiss()
     }
 
