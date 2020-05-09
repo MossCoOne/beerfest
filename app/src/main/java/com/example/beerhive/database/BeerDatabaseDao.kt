@@ -1,22 +1,20 @@
 package com.example.beerhive.database
 
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.lifecycle.LiveData
+import androidx.room.*
 
 @Dao
 interface BeerDatabaseDao {
 
-    @Query("SELECT * FROM Beer")
-    fun getAllBeers(): List<Beer>
+    @Query("SELECT * FROM DataBaseBeer")
+    fun getAllBeers(): LiveData<List<DataBaseBeer>>
 
-    @Insert
-    fun insertAll(vararg: Beer)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg dataBaseBeers: DataBaseBeer)
 
     @Delete
-    fun removeBeer(beer: Beer)
+    fun removeBeer(dataBaseBeer: DataBaseBeer)
 
-    @Query("DELETE FROM Beer")
+    @Query("DELETE FROM DataBaseBeer")
     fun clearAllBeer()
 }

@@ -5,13 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Beer::class], version = 1, exportSchema = false)
+@Database(entities = [DataBaseBeer::class], version = 1, exportSchema = false)
 abstract class BeerDatabase : RoomDatabase() {
 
-    abstract val beerDatabaseDao: BeerDatabase
+    abstract val beerDatabaseDao: BeerDatabaseDao
 
     companion object {
-        @Volatile//Make sure that changes made to the database are immediately
+        @Volatile//Make sure that changes made to the database are immediately visible on other threads
         private var INSTANCE: BeerDatabase? = null
 
         fun getInstance(context: Context): BeerDatabase {
