@@ -11,7 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beerhive.R
 import com.example.beerhive.beerdetail.BeerDetailActivity
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener {
         progressDialog = ProgressDialog(this)
        // onBeerListScreenCreated()
         beerListRecyclerView = binding.beerListRecyclerView
-        beerListRecyclerView?.layoutManager = LinearLayoutManager(this)
+        beerListRecyclerView?.layoutManager = GridLayoutManager(this,3)
         beerListRecyclerView?.itemAnimator = DefaultItemAnimator()
         beerViewModel.beerList.observe(this, Observer { onListLoaded(it) })
     }
@@ -70,11 +70,6 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener {
             progressDialog?.setMessage(getString(R.string.please_wait_message))
             progressDialog?.isIndeterminate = true
         }
-    }
-
-    private fun showErrorMessage() {
-        progressDialog?.dismiss()
-        showCustomDialog(getString(R.string.something_went_wrong_error_message))
     }
 
     private fun dismissProgressDialog() {

@@ -2,4 +2,9 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="horizontal_margin">16dp</dimen>
     <dimen name="image_size">50dp</dimen>
+    <dimen name="beer_card_height">150dp</dimen>
+    <dimen name="beer_card_width">75dp</dimen>
+    <dimen name="beer_image_height">75dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="beer_card_corner_radius">4dp</dimen>
 </resources>
