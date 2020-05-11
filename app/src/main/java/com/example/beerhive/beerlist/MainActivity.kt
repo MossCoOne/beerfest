@@ -1,10 +1,10 @@
 package com.example.beerhive.beerlist
 
-import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -12,7 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.beerhive.R
 import com.example.beerhive.beerdetail.BeerDetailActivity
 import com.example.beerhive.beerlist.BeerListAdapter.BeerItemClickListener
@@ -26,27 +25,22 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener {
     }
 
     private lateinit var beerViewModel: BeerViewModel
-    private var beerListRecyclerView: RecyclerView? = null
     private var beerListAdapter: BeerListAdapter? = null
-    private var progressDialog: ProgressDialog? = null
     private lateinit var databaseDao: BeerDatabase
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        showProgressDialog()
-        databaseDao = BeerDatabase.getInstance(application)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.progressbar.visibility = View.VISIBLE
 
+        databaseDao = BeerDatabase.getInstance(application)
         val application = requireNotNull(this).application
         val viewModelFactory = BeerViewModelFactory(databaseDao, application)
         beerViewModel = ViewModelProvider(this, viewModelFactory).get(BeerViewModel::class.java)
 
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.title = getString(R.string.beer_list_title)
-        progressDialog = ProgressDialog(this)
 
-        beerListRecyclerView = binding.beerListRecyclerView
-        beerListRecyclerView?.layoutManager = GridLayoutManager(this, 3)
-        beerListRecyclerView?.itemAnimator = DefaultItemAnimator()
         beerViewModel.beerList.observe(this, Observer { onListLoaded(it) })
     }
 
@@ -54,7 +48,12 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener {
         dismissProgressDialog()
         Log.d(LOG_TAG, it.toString())
         beerListAdapter = BeerListAdapter(this, it)
-        beerListRecyclerView?.adapter = beerListAdapter
+        val beerListRecyclerView = binding.beerListRecyclerView
+        beerListRecyclerView.layoutManager = GridLayoutManager(this, 3)
+        beerListRecyclerView.itemAnimator = DefaultItemAnimator()
+        beerListRecyclerView.adapter = beerListAdapter
+        beerListRecyclerView.visibility = View.VISIBLE
+
     }
 
     override fun onBeerItemClicked(domainBeer: Beer) {
@@ -67,24 +66,15 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener {
         startActivity(intent)
     }
 
-    private fun showProgressDialog() {
-        if (progressDialog != null) {
-            progressDialog?.setTitle(getString(R.string.places_loading))
-            progressDialog?.show()
-            progressDialog?.setMessage(getString(R.string.please_wait_message))
-            progressDialog?.isIndeterminate = true
-        }
-    }
-
     private fun dismissProgressDialog() {
-        progressDialog?.dismiss()
+        binding.progressbar.visibility = View.GONE
     }
 
     private fun showCustomDialog(titleText: String?) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(titleText)
         builder.setIcon(R.drawable.ic_error_outline_black_24dp)
-        builder.setNegativeButton(R.string.cancel_text) { dialog: DialogInterface?, which: Int -> finish() }
+        builder.setNegativeButton(R.string.cancel_text) { _: DialogInterface?, _: Int -> finish() }
         builder.show().setCancelable(false)
     }
 }
