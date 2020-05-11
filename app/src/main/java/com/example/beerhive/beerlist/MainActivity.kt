@@ -21,6 +21,10 @@ import com.example.beerhive.databinding.ActivityMainBinding
 import com.example.beerhive.domain.Beer
 
 class MainActivity : AppCompatActivity(), BeerItemClickListener {
+    companion object {
+        private val LOG_TAG: String? = MainActivity::class.simpleName
+    }
+
     private lateinit var beerViewModel: BeerViewModel
     private var beerListRecyclerView: RecyclerView? = null
     private var beerListAdapter: BeerListAdapter? = null
@@ -39,16 +43,16 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener {
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.title = getString(R.string.beer_list_title)
         progressDialog = ProgressDialog(this)
-       // onBeerListScreenCreated()
+
         beerListRecyclerView = binding.beerListRecyclerView
-        beerListRecyclerView?.layoutManager = GridLayoutManager(this,3)
+        beerListRecyclerView?.layoutManager = GridLayoutManager(this, 3)
         beerListRecyclerView?.itemAnimator = DefaultItemAnimator()
         beerViewModel.beerList.observe(this, Observer { onListLoaded(it) })
     }
 
     private fun onListLoaded(it: List<Beer>) {
         dismissProgressDialog()
-        Log.d("Resultsss",it.toString())
+        Log.d(LOG_TAG, it.toString())
         beerListAdapter = BeerListAdapter(this, it)
         beerListRecyclerView?.adapter = beerListAdapter
     }
