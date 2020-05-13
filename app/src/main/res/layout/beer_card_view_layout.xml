@@ -10,21 +10,18 @@
         android:id="@+id/beerCardView"
         android:layout_width="@dimen/beer_card_height"
         android:layout_height="@dimen/beer_card_height"
-        android:layout_margin="@dimen/margin_small"
-        app:cardCornerRadius="@dimen/margin_small">
+        app:cardCornerRadius="@dimen/margin_small"
+        app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/beerIconImageView"
                 android:layout_width="@dimen/beer_card_height"
                 android:layout_height="@dimen/beer_image_height"
                 android:layout_marginTop="@dimen/margin_small"
-                android:scaleType="fitCenter"
-                app:cardUseCompatPadding="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -57,6 +54,7 @@
                 tools:text="5 Litres" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.cardview.widget.CardView>
 
 </merge>

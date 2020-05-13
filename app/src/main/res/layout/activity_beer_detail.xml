@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="beerDetail"
             type="com.example.beerhive.domain.Beer" />
@@ -30,9 +31,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/horizontal_margin"
                 android:layout_marginBottom="@dimen/horizontal_margin"
+                android:text="@={beerDetail.beerName}"
                 android:textColor="@color/colorBlack"
                 android:textSize="28sp"
-                android:text="@={beerDetail.beerName}"
                 tools:text="This is the name" />
 
             <TextView
@@ -62,6 +63,9 @@
                 android:layout_marginBottom="@dimen/horizontal_margin"
                 android:text="@={beerDetail.beerBrewerTips}"
                 tools:text="This is brewer tips" />
+
         </LinearLayout>
+
     </ScrollView>
+
 </layout>
