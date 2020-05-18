@@ -7,7 +7,7 @@ import com.example.beerhive.database.BeerDatabase
 import com.example.beerhive.database.asDomainModel
 import com.example.beerhive.domain.Beer
 import com.example.beerhive.network.BeerServiceApiClient
-import com.example.beerhive.network.model.asDataBaseModel
+import com.example.beerhive.network.asDataBaseModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

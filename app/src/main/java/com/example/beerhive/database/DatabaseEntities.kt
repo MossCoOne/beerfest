@@ -4,7 +4,6 @@ import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.beerhive.domain.Beer
-import com.example.beerhive.network.model.BeerResponse
 
 @Entity(indices = [Index(value = ["beerImageUrl"], unique = true)])
 data class DataBaseBeer constructor(

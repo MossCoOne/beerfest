@@ -1,4 +1,4 @@
-package com.example.beerhive.network.model
+package com.example.beerhive.network
 
 import com.example.beerhive.database.DataBaseBeer
 import com.example.beerhive.domain.Beer
