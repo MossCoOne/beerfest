@@ -1,60 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/beerItemContainer"
-        android:layout_width="match_parent"
-        android:elevation="4dp"
-        android:layout_margin="4dp"
-        android:background="#ffffff"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/beerImageView"
-            android:layout_width="@dimen/image_size"
-            android:layout_height="@dimen/image_size"
-            android:layout_margin="@dimen/horizontal_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/beerNameTextView"
-            android:layout_width="0dp"
-            android:textColor="@color/colorBlack"
-            android:layout_marginEnd="@dimen/horizontal_margin"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/horizontal_margin"
-            android:layout_marginTop="@dimen/horizontal_margin"
-            app:layout_constraintEnd_toStartOf="@+id/nextImageView"
-            app:layout_constraintStart_toEndOf="@+id/beerImageView"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Castel Lite" />
-
-        <TextView
-            android:id="@+id/valueOfBeerTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/horizontal_margin"
-            android:layout_marginStart="@dimen/horizontal_margin"
-            android:layout_marginBottom="@dimen/horizontal_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/nextImageView"
-            app:layout_constraintStart_toEndOf="@+id/beerImageView"
-            tools:text="1,5 kg" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/nextImageView"
+        <com.example.beerhive.components.BeerCardView
+            android:id="@+id/beerCardView"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/horizontal_margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_chevron_right_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground" />
+
+    </LinearLayout>
 
 </layout>
