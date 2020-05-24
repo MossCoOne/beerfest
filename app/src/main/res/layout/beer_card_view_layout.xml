@@ -2,20 +2,20 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     tools:parentTag="android.widget.LinearLayout">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/beerCardView"
-        android:layout_width="@dimen/beer_card_height"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/beer_card_height"
         app:cardCornerRadius="@dimen/margin_small"
         app:cardUseCompatPadding="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/beerIconImageView"
@@ -44,6 +44,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small"
+                android:layout_marginTop="@dimen/horizontal_margin"
                 android:layout_marginEnd="@dimen/margin_small"
                 android:layout_marginBottom="@dimen/margin_small"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -51,6 +52,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/beerNameTextView"
+                app:layout_goneMarginBottom="@dimen/horizontal_margin"
                 tools:text="5 Litres" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
