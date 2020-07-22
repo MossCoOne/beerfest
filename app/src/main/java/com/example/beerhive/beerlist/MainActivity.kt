@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener {
     private fun onListLoaded(it: List<Beer>) {
         dismissProgressDialog()
         Log.d(LOG_TAG, it.toString())
-        beerListAdapter = BeerListAdapter(this, it)
+        beerListAdapter = BeerListAdapter(this)
+        beerListAdapter?.beersList = it
         val beerListRecyclerView = binding.beerListRecyclerView
         beerListRecyclerView.layoutManager = GridLayoutManager(this, 3)
         beerListRecyclerView.itemAnimator = DefaultItemAnimator()

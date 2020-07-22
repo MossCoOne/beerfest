@@ -11,9 +11,14 @@ import com.example.beerhive.databinding.BeerItemLayoutBinding
 import com.example.beerhive.domain.Beer
 import kotlinx.android.synthetic.main.beer_item_layout.view.*
 
-class BeerListAdapter(private val beerItemClickListener: BeerItemClickListener,
-                      private val beersList: List<Beer>) : RecyclerView.Adapter<BeerListViewHolder>() {
-    
+class BeerListAdapter(private val beerItemClickListener: BeerItemClickListener) : RecyclerView.Adapter<BeerListViewHolder>() {
+
+    var beersList = listOf<Beer>()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerListViewHolder {
         return BeerListViewHolder.fromParent(parent)
     }
