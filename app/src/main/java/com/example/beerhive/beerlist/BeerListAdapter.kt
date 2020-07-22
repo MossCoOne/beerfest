@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.beerhive.R
 import com.example.beerhive.beerlist.BeerListAdapter.BeerListViewHolder
@@ -12,25 +14,15 @@ import com.example.beerhive.domain.Beer
 import kotlinx.android.synthetic.main.beer_item_layout.view.*
 
 class BeerListAdapter(private val navigateToBeerDetailScreen: (domainBeer: Beer) -> Unit) :
-        RecyclerView.Adapter<BeerListViewHolder>() {
-
-    var beersList = listOf<Beer>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+        ListAdapter<Beer, BeerListViewHolder>(BeerListDiffCallBack()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BeerListViewHolder {
         return BeerListViewHolder.fromParent(parent)
     }
 
     override fun onBindViewHolder(holder: BeerListViewHolder, position: Int) {
-        val domainBeer = beersList[position]
+        val domainBeer = getItem(position)
         holder.bindData(domainBeer, navigateToBeerDetailScreen)
-    }
-
-    override fun getItemCount(): Int {
-        return beersList.size
     }
 
     class BeerListViewHolder private constructor(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -52,6 +44,17 @@ class BeerListAdapter(private val navigateToBeerDetailScreen: (domainBeer: Beer)
                 return BeerListViewHolder(binding.root)
             }
         }
+    }
+
+}
+
+class BeerListDiffCallBack : DiffUtil.ItemCallback<Beer>(){
+    override fun areItemsTheSame(oldItem: Beer, newItem: Beer): Boolean {
+       return oldItem.beerImageUrl == newItem.beerImageUrl
+    }
+
+    override fun areContentsTheSame(oldItem: Beer, newItem: Beer): Boolean {
+        return oldItem == newItem
     }
 
 }

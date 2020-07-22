@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var beerViewModel: BeerViewModel
-    private var beerListAdapter: BeerListAdapter? = null
+    private lateinit var beerListAdapter: BeerListAdapter
     private lateinit var databaseDao: BeerDatabase
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         dismissProgressDialog()
         Log.d(LOG_TAG, it.toString())
         beerListAdapter = BeerListAdapter(this::navigateToDetailedScreen)
-        beerListAdapter?.beersList = it
+        beerListAdapter.submitList(it)
         val beerListRecyclerView = binding.beerListRecyclerView
         beerListRecyclerView.layoutManager = GridLayoutManager(this, 3)
         beerListRecyclerView.itemAnimator = DefaultItemAnimator()
