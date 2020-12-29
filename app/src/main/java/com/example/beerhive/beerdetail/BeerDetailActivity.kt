@@ -22,10 +22,10 @@ class BeerDetailActivity : AppCompatActivity() {
 
 
         if (intent != null && intent.hasExtra(BEER_EXTRA)) {
-            val beer: Beer = intent.getParcelableExtra(BEER_EXTRA)
-            // beer.beerBrewingTipsTitle = getString(R.string.brewing_tips)
+            val beer: Beer? = intent.getParcelableExtra(BEER_EXTRA)
+            beer?.beerBrewingTipsTitle = getString(R.string.brewing_tips)
             binding.beerDetail = beer
-            Glide.with(binding.beerImageView.context).load(beer.beerImageUrl).dontAnimate().fitCenter().diskCacheStrategy(
+            Glide.with(binding.beerImageView.context).load(beer?.beerImageUrl).dontAnimate().fitCenter().diskCacheStrategy(
                     DiskCacheStrategy.RESOURCE)
                     .placeholder(R.drawable.place_holder).error(R.drawable.place_holder).into(binding.beerImageView)
         }
