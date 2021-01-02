@@ -5,9 +5,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.beerhive.R
 import com.example.beerhive.beerlist.BeerListAdapter.BeerListViewHolder
 import com.example.beerhive.databinding.BeerItemLayoutBinding
 import com.example.beerhive.domain.Beer
@@ -28,12 +25,8 @@ class BeerListAdapter(private val navigateToBeerDetailScreen: (domainBeer: Beer)
 
         fun bindData(domainBeer: Beer, navigateToBeerDetailScreen: (domainBeer: Beer) -> Unit) {
 
-            Glide.with(binding.beerImageView.context).load(domainBeer.beerImageUrl).dontAnimate().fitCenter().diskCacheStrategy(
-                    DiskCacheStrategy.RESOURCE)
-                    .placeholder(R.drawable.place_holder).error(R.drawable.place_holder).into(binding.beerImageView)
-
-            binding.beerNameTextView.text = domainBeer.beerName
-            binding.valueOfBeerTextView.text = "${domainBeer.volume} ${domainBeer.volumeUnit}"
+            binding.beer = domainBeer
+            binding.executePendingBindings()
 
             binding.beerCardView.setOnClickListener {
                 navigateToBeerDetailScreen(domainBeer)
