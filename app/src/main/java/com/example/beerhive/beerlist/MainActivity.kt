@@ -14,18 +14,17 @@ import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.beerhive.R
 import com.example.beerhive.beerdetail.BeerDetailActivity
-import com.example.beerhive.beerlist.BeerListAdapter.BeerItemClickListener
 import com.example.beerhive.database.BeerDatabase
 import com.example.beerhive.databinding.ActivityMainBinding
 import com.example.beerhive.domain.Beer
 
-class MainActivity : AppCompatActivity(), BeerItemClickListener {
+class MainActivity : AppCompatActivity() {
     companion object {
         private val LOG_TAG: String? = MainActivity::class.simpleName
     }
 
     private lateinit var beerViewModel: BeerViewModel
-    private var beerListAdapter: BeerListAdapter? = null
+    private lateinit var beerListAdapter: BeerListAdapter
     private lateinit var databaseDao: BeerDatabase
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,17 +46,14 @@ class MainActivity : AppCompatActivity(), BeerItemClickListener {
     private fun onListLoaded(it: List<Beer>) {
         dismissProgressDialog()
         Log.d(LOG_TAG, it.toString())
-        beerListAdapter = BeerListAdapter(this, it)
+        beerListAdapter = BeerListAdapter(this::navigateToDetailedScreen)
+        beerListAdapter.submitList(it)
         val beerListRecyclerView = binding.beerListRecyclerView
         beerListRecyclerView.layoutManager = GridLayoutManager(this, 3)
         beerListRecyclerView.itemAnimator = DefaultItemAnimator()
         beerListRecyclerView.adapter = beerListAdapter
         beerListRecyclerView.visibility = View.VISIBLE
 
-    }
-
-    override fun onBeerItemClicked(domainBeer: Beer) {
-        navigateToDetailedScreen(domainBeer)
     }
 
     private fun navigateToDetailedScreen(domainBeer: Beer) {
