@@ -9,14 +9,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.beerhive.R
 import com.example.beerhive.beerdetail.BeerDetailActivity
 import com.example.beerhive.databinding.ActivityMainBinding
 import com.example.beerhive.domain.Beer
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     companion object {
         private val LOG_TAG: String? = MainActivity::class.simpleName
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.title = getString(R.string.beer_list_title)
 
-        beerViewModel.beerList.observe(this, Observer { onListLoaded(it) })
+        beerViewModel.beerList.observe(this, { onListLoaded(it) })
     }
 
     private fun onListLoaded(it: List<Beer>) {

@@ -1,18 +1,13 @@
 package com.example.beerhive.beerlist
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
-import com.example.beerhive.database.BeerDatabase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class BeerViewModel(private val beerDatabase: BeerDatabase, application: Application) : ViewModel() {
-
-    private val beerRepository = BeerRepository(beerDatabase)
-    private var viewModelJob = Job()
-    private val viewModelScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+@HiltViewModel
+class BeerViewModel @Inject constructor(beerRepository: IBeerRepository) : ViewModel() {
 
     init {
         viewModelScope.launch {
@@ -20,11 +15,5 @@ class BeerViewModel(private val beerDatabase: BeerDatabase, application: Applica
         }
     }
 
-    val beerList = beerRepository.beerList
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
+    val beerList = beerRepository.getBeerList()
 }
