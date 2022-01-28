@@ -5,16 +5,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.beerhive.R
 import com.example.beerhive.beerdetail.BeerDetailActivity
-import com.example.beerhive.database.BeerDatabase
 import com.example.beerhive.databinding.ActivityMainBinding
 import com.example.beerhive.domain.Beer
 
@@ -23,19 +22,13 @@ class MainActivity : AppCompatActivity() {
         private val LOG_TAG: String? = MainActivity::class.simpleName
     }
 
-    private lateinit var beerViewModel: BeerViewModel
+    private val beerViewModel: BeerViewModel by viewModels()
     private lateinit var beerListAdapter: BeerListAdapter
-    private lateinit var databaseDao: BeerDatabase
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.progressbar.visibility = View.VISIBLE
-
-        databaseDao = BeerDatabase.getInstance(application)
-        val application = requireNotNull(this).application
-        val viewModelFactory = BeerViewModelFactory(databaseDao, application)
-        beerViewModel = ViewModelProvider(this, viewModelFactory).get(BeerViewModel::class.java)
 
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.title = getString(R.string.beer_list_title)

@@ -1,14 +1,14 @@
 package com.example.beerhive.beerlist
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import com.example.beerhive.database.BeerDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
-class BeerViewModel(private val beerDatabase: BeerDatabase, application: Application) : AndroidViewModel(application) {
+class BeerViewModel(private val beerDatabase: BeerDatabase, application: Application) : ViewModel() {
 
     private val beerRepository = BeerRepository(beerDatabase)
     private var viewModelJob = Job()
