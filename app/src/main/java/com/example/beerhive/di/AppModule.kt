@@ -5,6 +5,7 @@ import com.example.beerhive.beerlist.BeerRepository
 import com.example.beerhive.beerlist.IBeerRepository
 import com.example.beerhive.database.BeerDatabase
 import com.example.beerhive.database.BeerDatabaseDao
+import com.example.beerhive.network.BeerServiceApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,7 +29,16 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun providesIBeerRepository(beerDatabaseDao: BeerDatabaseDao): IBeerRepository {
-        return BeerRepository(beerDatabaseDao)
+    fun providesIBeerRepository(
+        beerDatabaseDao: BeerDatabaseDao,
+        beerServiceApi: BeerServiceApi
+    ): IBeerRepository {
+        return BeerRepository(beerDatabaseDao, beerServiceApi)
+    }
+
+    @Singleton
+    @Provides
+    fun provideBeerServiceApi(): BeerServiceApi {
+        return BeerServiceApi.create()
     }
 }
