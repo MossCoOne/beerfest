@@ -21,6 +21,7 @@ object AppModule {
     fun provideBeerDatabase(application: Application): BeerDatabase {
         return BeerDatabase.getInstance(application)
     }
+
     @Provides
     @Singleton
     fun providesBeerDatabaseDao(application: Application): BeerDatabaseDao {
@@ -31,9 +32,10 @@ object AppModule {
     @Singleton
     fun providesIBeerRepository(
         beerDatabaseDao: BeerDatabaseDao,
-        beerServiceApi: BeerServiceApi
+        beerServiceApi: BeerServiceApi,
+        dispatcherProvider: DispatcherProvider
     ): IBeerRepository {
-        return BeerRepository(beerDatabaseDao, beerServiceApi)
+        return BeerRepository(beerDatabaseDao, beerServiceApi, dispatcherProvider.io)
     }
 
     @Singleton

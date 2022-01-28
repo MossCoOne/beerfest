@@ -8,13 +8,14 @@ import com.example.beerhive.database.asDomainModel
 import com.example.beerhive.domain.Beer
 import com.example.beerhive.network.BeerServiceApi
 import com.example.beerhive.network.model.asDataBaseModel
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class BeerRepository @Inject constructor(
     private val beerDatabaseDao: BeerDatabaseDao,
-    private val beerServiceApi: BeerServiceApi
+    private val beerServiceApi: BeerServiceApi,
+    private val ioDispatcher: CoroutineDispatcher
 ) : IBeerRepository {
 
     override fun getBeerList(): LiveData<List<Beer>> {
@@ -24,7 +25,7 @@ class BeerRepository @Inject constructor(
     }
 
     override suspend fun refreshBeerList() {
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             val beerList = beerServiceApi.getListOfBeersAsync().await()
             Log.d("XXXXX", beerList.toString())
             beerDatabaseDao.insertAll(*beerList.asDataBaseModel())
