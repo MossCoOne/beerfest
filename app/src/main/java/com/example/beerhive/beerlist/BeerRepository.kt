@@ -26,9 +26,16 @@ class BeerRepository @Inject constructor(
 
     override suspend fun refreshBeerList() {
         withContext(ioDispatcher) {
-            val beerList = beerServiceApi.getListOfBeersAsync().await()
-            Log.d("XXXXX", beerList.toString())
-            beerDatabaseDao.insertAll(*beerList.asDataBaseModel())
+            val results = beerServiceApi.getListOfBeers()
+            if (results.isSuccessful) {
+                val beerList = results.body()
+                beerList?.let {
+                    beerDatabaseDao.insertAll(*it.asDataBaseModel())
+                }
+                Log.d("XXXXX", results.body().toString())
+            } else {
+                Log.d("Error", results.body().toString())
+            }
         }
     }
 

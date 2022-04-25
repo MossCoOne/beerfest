@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.mainToolbar)
         supportActionBar?.title = getString(R.string.beer_list_title)
 
-        beerViewModel.beerList.observe(this, { onListLoaded(it) })
+        beerViewModel.beerList.observe(this) { onListLoaded(it) }
     }
 
     private fun onListLoaded(it: List<Beer>) {
