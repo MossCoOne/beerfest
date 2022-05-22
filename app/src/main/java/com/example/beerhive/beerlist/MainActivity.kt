@@ -1,63 +1,35 @@
 package com.example.beerhive.beerlist
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.view.View
-import androidx.activity.viewModels
+import android.os.PersistableBundle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import com.example.beerhive.R
-import com.example.beerhive.beerdetail.BeerDetailActivity
 import com.example.beerhive.databinding.ActivityMainBinding
-import com.example.beerhive.domain.Beer
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    companion object {
-        private val LOG_TAG: String? = MainActivity::class.simpleName
-    }
-
-    private val beerViewModel: BeerViewModel by viewModels()
-    private lateinit var beerListAdapter: BeerListAdapter
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.progressbar.visibility = View.VISIBLE
-
-        setSupportActionBar(binding.mainToolbar)
-        supportActionBar?.title = getString(R.string.beer_list_title)
-
-        beerViewModel.beerList.observe(this) { onListLoaded(it) }
     }
-
-    private fun onListLoaded(it: List<Beer>) {
-        dismissProgressDialog()
-        Log.d(LOG_TAG, it.toString())
-        beerListAdapter = BeerListAdapter(this::navigateToDetailedScreen)
-        beerListAdapter.submitList(it)
-        val beerListRecyclerView = binding.beerListRecyclerView
-        beerListRecyclerView.layoutManager = GridLayoutManager(this, 3)
-        beerListRecyclerView.itemAnimator = DefaultItemAnimator()
-        beerListRecyclerView.adapter = beerListAdapter
-        beerListRecyclerView.visibility = View.VISIBLE
-
-    }
-
-    private fun navigateToDetailedScreen(domainBeer: Beer) {
-        val intent = Intent(this, BeerDetailActivity::class.java)
-        intent.putExtra(BeerDetailActivity.BEER_EXTRA, domainBeer)
-        startActivity(intent)
-    }
-
-    private fun dismissProgressDialog() {
-        binding.progressbar.visibility = View.GONE
+    override fun onPostCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onPostCreate(savedInstanceState, persistentState)
+        val navController = findNavController(R.id.app_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(
+            topLevelDestinationIds = setOf(),
+            fallbackOnNavigateUpListener = {
+                finish()
+                true
+            })
+        binding.mainToolbar.setupWithNavController(navController,appBarConfiguration)
     }
 
     private fun showCustomDialog(titleText: String?) {
