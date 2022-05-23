@@ -9,5 +9,19 @@
         android:id="@+id/beerListFragment"
         android:name="com.example.beerhive.beerlist.BeerListFragment"
         android:label="@string/beer_list_title"
-        tools:layout="@layout/fragment_beer_list" />
+        tools:layout="@layout/fragment_beer_list">
+        <action
+            android:id="@+id/action_beerListFragment_to_beerDetailsFragment"
+            app:destination="@id/beerDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/beerDetailsFragment"
+        android:name="com.example.beerhive.beerdetail.BeerDetailsFragment"
+        android:label="fragment_beer_details"
+        tools:layout="@layout/fragment_beer_details">
+        <argument
+            android:name="beerDetail"
+            app:argType="com.example.beerhive.domain.Beer"/>
+
+    </fragment>
 </navigation>

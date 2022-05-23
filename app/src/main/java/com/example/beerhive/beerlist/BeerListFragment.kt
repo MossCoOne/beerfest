@@ -1,15 +1,14 @@
 package com.example.beerhive.beerlist
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.beerhive.R
-import com.example.beerhive.beerdetail.BeerDetailActivity
 import com.example.beerhive.databinding.FragmentBeerListBinding
 import com.example.beerhive.domain.Beer
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,6 +25,12 @@ class BeerListFragment : Fragment(R.layout.fragment_beer_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentBeerListBinding.bind(view)
+        beerListAdapter = BeerListAdapter(this::navigateToDetailedScreen)
+        binding.listRecyclerView.apply {
+            adapter = beerListAdapter
+            layoutManager = GridLayoutManager(activity, 3)
+            itemAnimator = DefaultItemAnimator()
+        }
 
         beerViewModel.beerList.observe(viewLifecycleOwner) {
             displayList(it)
@@ -34,15 +39,9 @@ class BeerListFragment : Fragment(R.layout.fragment_beer_list) {
 
     private fun displayList(it: List<Beer>) {
         dismissProgressDialog()
-        Log.d(LOG_TAG, it.toString())
-        beerListAdapter = BeerListAdapter(this::navigateToDetailedScreen)
         beerListAdapter.submitList(it)
-        binding.listRecyclerView.apply {
-            adapter = beerListAdapter
-            layoutManager = GridLayoutManager(activity, 3)
-            itemAnimator = DefaultItemAnimator()
-            visibility = View.VISIBLE
-        }
+        binding.listRecyclerView.visibility = View.VISIBLE
+        Log.d(LOG_TAG, it.toString())
     }
 
     private fun dismissProgressDialog() {
@@ -50,8 +49,8 @@ class BeerListFragment : Fragment(R.layout.fragment_beer_list) {
     }
 
     private fun navigateToDetailedScreen(domainBeer: Beer) {
-        val intent = Intent(activity, BeerDetailActivity::class.java)
-        intent.putExtra(BeerDetailActivity.BEER_EXTRA, domainBeer)
-        startActivity(intent)
+        val navToDetailScreenAction =
+            BeerListFragmentDirections.actionBeerListFragmentToBeerDetailsFragment(domainBeer)
+        findNavController().navigate(navToDetailScreenAction)
     }
 }
