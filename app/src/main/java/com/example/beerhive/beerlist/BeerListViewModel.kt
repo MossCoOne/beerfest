@@ -7,7 +7,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BeerViewModel @Inject constructor(beerRepository: IBeerRepository) : ViewModel() {
+class BeerListViewModel @Inject constructor(beerRepository: IBeerRepository) : ViewModel() {
 
     init {
         viewModelScope.launch {

@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -55,6 +56,10 @@ dependencies {
     //view model
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$version_view_model"
     implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version" //by viewModels()
+
+    //navigation component
+    implementation "androidx.navigation:navigation-fragment-ktx:$version_nav_component"
+    implementation "androidx.navigation:navigation-ui-ktx:$version_nav_component"
 
     implementation "com.github.bumptech.glide:glide:$version_glide"
     implementation "androidx.core:core-ktx:1.7.0"
