@@ -2,7 +2,7 @@ package com.example.beerhive.beerlist
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.map
 import com.example.beerhive.database.BeerDatabaseDao
 import com.example.beerhive.database.asDomainModel
 import com.example.beerhive.domain.Beer
@@ -19,9 +19,7 @@ class BeerRepository @Inject constructor(
 ) : IBeerRepository {
 
     override fun getBeerList(): LiveData<List<Beer>> {
-        return Transformations.map(beerDatabaseDao.getAllBeers()) {
-            it.asDomainModel()
-        }
+        return beerDatabaseDao.getAllBeers().map { it.asDomainModel() }
     }
 
     override suspend fun refreshBeerList() {
